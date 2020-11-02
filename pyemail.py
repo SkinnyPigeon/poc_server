@@ -14,6 +14,21 @@ app = Flask(__name__)
 app.config['ERROR_404_HELP'] = False
 CORS(app)
 
+def pick_email(case_study):
+    if case_study == 'FCRB':
+        email = "jpujoll@clinic.cat"
+        name = "Josep"
+    elif case_study == 'USTAN':
+        email = "tcwds@st-andrews.ac.uk"
+        name = "Thais"
+    elif case_study == 'ZMC':
+        email = "m.mestrum@zuyderland.nl"
+        name = "Mark"
+    elif case_study == 'TEST':
+        email = "2434924@dundee.ac.uk"
+        name = "Euan"
+    return [email, name]
+
 @app.route('/')
 def hello():
     return "Hello"
@@ -22,19 +37,19 @@ def hello():
 def send():
     req_data = request.get_json()
     print(req_data)
-
+    email, name = pick_email(req_data['case_study'])
     mailjet = Client(auth=(api_key, api_secret), version='v3.1')
     data = {
     'Messages': [
         {
         "From": {
-            "Email": "euan.blackledge@soprasteria.com",
+            "Email": "2434924@dundee.ac.uk",
             "Name": "Euan"
         },
         "To": [
             {
-            "Email": "philtheskinnypigeon@yahoo.co.uk",
-            "Name": "You"
+            "Email": email,
+            "Name": name
             }
         ],
         "Subject": "POC Test Dev Results",
