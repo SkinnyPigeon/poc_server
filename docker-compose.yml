@@ -1,0 +1,16 @@
+version: '3'
+services:
+  poc_server:
+    container_name: poc_server
+    restart: always
+    build: .
+    ports:
+      - "2021:2021"
+    stdin_open: true
+    tty: true
+    networks:
+      - serums
+
+networks:
+  serums:
+    external: true
